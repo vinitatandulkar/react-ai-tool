@@ -9,6 +9,20 @@ const Recent_search = ({
     localStorage.clear();
     setRecentHistory([]);
   };
+
+  const clearSelectedHistory = (selectedItem) => {
+    let history = JSON.parse(localStorage.getItem("history"));
+    console.log(history);
+    history = history.filter((item) => {
+      //console.log(item);
+      if (item != selectedItem) {
+        return item;
+      }
+    });
+    setRecentHistory(history);
+    localStorage.setItem("history", JSON.stringify(history));
+    console.log(history);
+  };
   return (
     <div className="col-span-1 dark:bg-zinc-700 bg-red-100 pt-4 px-6">
       <h1 className=" text-xl dark:text-white text-zinc-700 flex px-6">
@@ -33,11 +47,14 @@ const Recent_search = ({
               <li
                 key={index}
                 onClick={() => setselectedHistory(item)}
-                className="p-1 pl-5 truncate dark:text-zinc-400 text-zinc-700 cursor-pointer dark:hover:bg-zinc-600 dark:hover:text-zinc-300 hover:bg-red-200 hover:text-zinc-800"
+                className="w-full p-1 pl-5 truncate dark:text-zinc-400 text-zinc-700 cursor-pointer dark:hover:bg-zinc-600 dark:hover:text-zinc-300 hover:bg-red-200 hover:text-zinc-800"
               >
                 {item}
               </li>
-              <button onClick={clearHistory} className="cursor-pointer">
+              <button
+                onClick={() => clearSelectedHistory(item)}
+                className="cursor-pointer hover:bg-zinc-800 bg-zinc-700"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="24px"
